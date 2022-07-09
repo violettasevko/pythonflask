@@ -33,7 +33,17 @@ def about():
 
 @app.route('/buy/<int:id>')
 def item_buy(id):
-    return str(id)
+    item = Item.query.get(id)
+
+    api = Api(merchant_id=1396424,
+              secret_key='test')
+    checkout = Checkout(api=api)
+    data = {
+        "currency": "USD",
+        "amount": str(item.price) + "00"
+    }
+    url = checkout.url(data).get('checkout_url')
+    return redirect(url)
 
 
 @app.route('/create', methods=['POST', 'GET'])
