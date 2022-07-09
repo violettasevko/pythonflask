@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 
+from cloudipsp import Api, Checkout
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///myshop.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -27,6 +29,11 @@ def index():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+
+@app.route('/buy/<int:id>')
+def item_buy(id):
+    return str(id)
 
 
 @app.route('/create', methods=['POST', 'GET'])
